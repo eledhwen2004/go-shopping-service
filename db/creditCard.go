@@ -2,23 +2,29 @@ package db
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // CreditCard represents a user's credit card details in the system.
 type CreditCard struct {
-	ID              uint      `json:"id" gorm:"primaryKey"`
-	CardholderName  string    `json:"cardholder_name"`
-	LastFourDigits  string    `json:"last_four_digits"`
-	ExpirationMonth int       `json:"expiration_month"`
-	ExpirationYear  int       `json:"expiration_year"`
-	CardType        string    `json:"card_type"` // Visa, MasterCard, etc.
-	BillingAddress  string    `json:"billing_address"`
-	CreatedAt       time.Time `json:"created_at"`
-	UpdatedAt       time.Time `json:"updated_at"`
-	UserID          uint      `json:"user_id" gorm:"index"` // Foreign key referencing the user who owns the card
+	ID              uint           `json:"id" gorm:"primaryKey"`
+	CardholderName  string         `json:"cardholder_name" gorm:"not null"`
+	LastFourDigits  string         `json:"last_four_digits" gorm:"not null"`
+	ExpirationMonth uint           `json:"expiration_month" gorm:"not null"`
+	ExpirationYear  uint           `json:"expiration_year" gorm:"not null"`
+	CardType        string         `json:"card_type" gorm:"not null"` // Visa, MasterCard, etc.
+	BillingAddress  string         `json:"billing_address" gorm:"not null"`
+	CustomerID      uint           `json:"customer_id" gorm:"index;not null"`
+	CreatedAt       time.Time      `gorm:"autoCreateTime"`
+	DeletedAt       gorm.DeletedAt `gorm:"index"`
 }
 
-// TableName sets a custom table name for the CreditCard model in the database.
-func (CreditCard) TableName() string {
-	return "credit_cards"
+func addCreditCard() {
+}
+
+func updateCreditCard() {
+}
+
+func deleteCreditCard() {
 }

@@ -41,7 +41,7 @@ type Customer struct {
 
 type Supplier struct {
 	gorm.Model
-	ID          string    `json:"id" gorm:"type:uuid;default:gen_random_uuid();primaryKey;index"`
+	ID          string    `json:"id" gorm:type:uuid;default:gen_random_uuid();primaryKey;index`
 	UserID      string    `json:"user_id" gorm:"not null"`
 	User        User      `gorm:"foreignKey:UserID;not null"`
 	CompanyName string    `json:"company_name" gorm:"not null"`

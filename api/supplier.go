@@ -9,6 +9,5 @@ func deleteProduct() {
 func deleteOrder() {}
 
 func changeOrderStatus() {
-	switch ()
-
+	//	switch ()
 }
