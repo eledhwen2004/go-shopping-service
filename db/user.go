@@ -1,4 +1,4 @@
-package models
+package db
 
 import (
 	"time"
@@ -48,3 +48,12 @@ type Supplier struct {
 	Address     string    `gorm:"not null"`
 	Products    []Product `gorm:"many2many:product_suppliers"`
 }
+
+func createAccount() {
+}
+
+func deleteAccount() {}
+
+func updateAccount() {}
+
+func getAccount() {}

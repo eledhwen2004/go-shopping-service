@@ -1,4 +1,4 @@
-package handles
+package api
 
 func addProduct() {
 }

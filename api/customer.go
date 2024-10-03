@@ -1,4 +1,4 @@
-package handles
+package api
 
 func addToCart() {
 }
@@ -10,12 +10,6 @@ func giveOrder() {
 }
 
 func cancelOrder() {
-}
-
-func sendComment() {
-}
-
-func deleteComment() {
 }
 
 func sendRating() {
