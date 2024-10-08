@@ -1,7 +1,10 @@
-package db
+package database
 
 import (
+	"fmt"
 	"time"
+
+	"shopping-clone/postgre"
 
 	"gorm.io/gorm"
 )
@@ -31,8 +34,35 @@ type Order struct {
 	DeletedAt   gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 }
 
-func createOrder() {}
+func CreateOrder(order *Order) {
+	result := postgre.DB.Create(&order)
+	if result.Error != nil {
+		fmt.Printf("Error while creating order %v\n", result.Error)
+		return
+	}
+}
 
-func deleteOrder() {}
+func ReadOrder(orderID string) Order {
+	order := Order{}
+	result := postgre.DB.Where("id = ?", orderID).First(&order)
+	if result.Error != nil {
+		fmt.Printf("Error while finding order %v\n", result.Error)
+	}
+	return order
+}
 
-func updateOrderStatus() {}
+func UpdateOrder(order *Order) {
+	result := postgre.DB.Model(&Order{}).Where("id = ?", order.ID).Updates(&order)
+	if result.Error != nil {
+		fmt.Printf("Error while updating order %v\n", result.Error)
+		return
+	}
+}
+
+func DeleteOrder(orderID string) {
+	result := postgre.DB.Where("id = ?", orderID).Delete(&Order{})
+	if result.Error != nil {
+		fmt.Printf("Error while deleting order %v\n", result.Error)
+		return
+	}
+}
