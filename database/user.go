@@ -72,6 +72,15 @@ func ReadUser(id string) (*User, error) {
 	return &user, result.Error
 }
 
+func ListUsers() (*[]User, error) {
+	users := []User{}
+	result := postgre.DB.Model(User{}).Find(&users)
+	if result.Error != nil {
+		fmt.Printf("Error while finding users %v\n", result.Error)
+	}
+	return &users, result.Error
+}
+
 func UpdateUser(user *User) error {
 	result := postgre.DB.Model(&User{}).Where("id = ?", user.ID).Updates(&user)
 	if result.Error != nil {
@@ -109,6 +118,15 @@ func ReadCustomer(customerID string) (*Customer, error) {
 		fmt.Printf("Error while finding customer %v\n", result.Error)
 	}
 	return &customer, result.Error
+}
+
+func ListCustomers() (*[]Customer, error) {
+	customers := []Customer{}
+	result := postgre.DB.Model(Customer{}).Find(&customers)
+	if result.Error != nil {
+		fmt.Printf("Error while finding customers %v\n", result.Error)
+	}
+	return &customers, result.Error
 }
 
 func UpdateCustomer(customer *Customer) error {
@@ -156,6 +174,15 @@ func ReadSupplier(supplierID string) (*Supplier, error) {
 		fmt.Printf("Error while finding customer %v\n", result.Error)
 	}
 	return &supplier, result.Error
+}
+
+func ListSuppliers() (*[]Supplier, error) {
+	suppliers := []Supplier{}
+	result := postgre.DB.Model(Supplier{}).Find(&suppliers)
+	if result.Error != nil {
+		fmt.Printf("Error while finding customers %v\n", result.Error)
+	}
+	return &suppliers, result.Error
 }
 
 func UpdateSupplier(supplier *Supplier) error {

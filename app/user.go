@@ -10,6 +10,10 @@ func ReadUser(id string) (*database.User, error) {
 	return database.ReadUser(id)
 }
 
+func ListUsers() (*[]database.User, error) {
+	return database.ListUsers()
+}
+
 func UpdateUser(user *database.User) error {
 	return database.UpdateUser(user)
 }
@@ -26,6 +30,10 @@ func ReadCustomer(customerID string) (*database.Customer, error) {
 	return database.ReadCustomer(customerID)
 }
 
+func ListCustomers() (*[]database.Customer, error) {
+	return database.ListCustomers()
+}
+
 func UpdateCustomer(customer *database.Customer) error {
 	return database.UpdateCustomer(customer)
 }
@@ -40,6 +48,10 @@ func CreateSupplier(supplier *database.Supplier) error {
 
 func ReadSupplier(supplierID string) (*database.Supplier, error) {
 	return database.ReadSupplier(supplierID)
+}
+
+func ListSuppliers() (*[]database.Supplier, error) {
+	return database.ListSuppliers()
 }
 
 func UpdateSupplier(supplier *database.Supplier) error {
