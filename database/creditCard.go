@@ -24,35 +24,35 @@ type CreditCard struct {
 	DeletedAt       gorm.DeletedAt `gorm:"index"`
 }
 
-func CreateCreditCard(creditCard *CreditCard) {
+func CreateCreditCard(creditCard *CreditCard) error {
 	result := postgre.DB.Create(&creditCard)
 	if result.Error != nil {
 		fmt.Printf("Error while creating credit card %v\n", result.Error)
-		return
 	}
+	return result.Error
 }
 
-func ReadCreditCard(creditCardID string) CreditCard {
+func ReadCreditCard(creditCardID string) (*CreditCard, error) {
 	creditCard := CreditCard{}
 	result := postgre.DB.Where("id = ?", creditCardID).First(&creditCard)
 	if result.Error != nil {
 		fmt.Printf("Error while finding credit card %v\n", result.Error)
 	}
-	return creditCard
+	return &creditCard, result.Error
 }
 
-func UpdateCreditCard(creditCard *CreditCard) {
+func UpdateCreditCard(creditCard *CreditCard) error {
 	result := postgre.DB.Model(&CreditCard{}).Where("id = ?", creditCard.ID).Updates(&creditCard)
 	if result.Error != nil {
 		fmt.Printf("Error while updating credit card %v\n", result.Error)
-		return
 	}
+	return result.Error
 }
 
-func DeleteCreditCard(creditCardID string) {
+func DeleteCreditCard(creditCardID string) error {
 	result := postgre.DB.Where("id = ?", creditCardID).Delete(&CreditCard{})
 	if result.Error != nil {
 		fmt.Printf("Error while deleting credit card %v\n", result.Error)
-		return
 	}
+	return result.Error
 }

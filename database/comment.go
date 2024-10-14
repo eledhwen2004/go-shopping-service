@@ -22,45 +22,45 @@ type Comment struct {
 	DeletedAt  gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 }
 
-func CreateComment(comment *Comment) {
+func CreateComment(comment *Comment) error {
 	result := postgre.DB.Create(&comment)
 	if result.Error != nil {
 		fmt.Printf("Error while creating comment %v\n", result.Error)
-		return
 	}
+	return result.Error
 }
 
-func ReadComment(commentID string) Comment {
+func ReadComment(commentID string) (*Comment, error) {
 	comment := Comment{}
 	result := postgre.DB.Where("id = ?", commentID).First(&comment)
 	if result.Error != nil {
 		fmt.Printf("Error while finding comment %v\n", result.Error)
 	}
-	return comment
+	return &comment, result.Error
 }
 
-func UpdateComment(comment *Comment) {
+func UpdateComment(comment *Comment) error {
 	result := postgre.DB.Model(&Comment{}).Where("id = ?", comment.ID).Updates(&comment)
 	if result.Error != nil {
 		fmt.Printf("Error while updating comment %v\n", result.Error)
-		return
 	}
+	return result.Error
 }
 
-func DeleteComment(commentID string) {
+func DeleteComment(commentID string) error {
 	result := postgre.DB.Where("id = ?", commentID).Delete(&Comment{})
 	if result.Error != nil {
 		fmt.Printf("Error while deleting comment %v\n", result.Error)
-		return
 	}
+	return result.Error
 }
 
-func GetAllCommentsByCustomerID(customerID string) []Comment {
+func GetAllCommentsByCustomerID(customerID string) (*[]Comment, error) {
 	comments := []Comment{}
 	result := postgre.DB.Where("customer_id = ?", customerID).Find(&comments)
 	if result.Error != nil {
 		fmt.Printf("Error while searching products : %v", result.Error)
-		return nil
+		return nil, result.Error
 	}
-	return comments
+	return &comments, result.Error
 }
