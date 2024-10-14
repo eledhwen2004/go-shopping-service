@@ -55,120 +55,129 @@ type Supplier struct {
 
 // USER CRUD
 
-func CreateUser(user *User) {
+func CreateUser(user *User) error {
 	result := postgre.DB.Create(&user)
 	if result.Error != nil {
 		fmt.Printf("Error while creating user %v\n", result.Error)
 	}
+	return result.Error
 }
 
-func ReadUser(id string) User {
+func ReadUser(id string) (*User, error) {
 	user := User{}
 	result := postgre.DB.Where("id = ?", id).First(&user)
 	if result.Error != nil {
 		fmt.Printf("Error while finding user %v\n", result.Error)
 	}
-	return user
+	return &user, result.Error
 }
 
-func UpdateUser(user *User) {
+func UpdateUser(user *User) error {
 	result := postgre.DB.Model(&User{}).Where("id = ?", user.ID).Updates(&user)
 	if result.Error != nil {
 		fmt.Printf("Error while updating user %v\n", result.Error)
 	}
+	return result.Error
 }
 
-func DeleteUser(id string) {
+func DeleteUser(id string) error {
 	result := postgre.DB.Where("id = ?", id).Delete(&User{})
 	if result.Error != nil {
 		fmt.Printf("Error while deleting user %v\n", result.Error)
 	}
+	return result.Error
 }
 
 // CUSTOMER CRUD
 
-func CreateCustomer(customer *Customer) {
+func CreateCustomer(customer *Customer) error {
 	tx := postgre.DB.Begin()
 	result := tx.Create(&customer)
 	if result.Error != nil {
 		fmt.Printf("Error while creating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }
 
-func ReadCustomer(customerID string) Customer {
+func ReadCustomer(customerID string) (*Customer, error) {
 	customer := Customer{}
 	result := postgre.DB.Where("id = ?", customerID).First(&customer)
 	if result.Error != nil {
 		fmt.Printf("Error while finding customer %v\n", result.Error)
 	}
-	return customer
+	return &customer, result.Error
 }
 
-func UpdateCustomer(customer *Customer) {
+func UpdateCustomer(customer *Customer) error {
 	tx := postgre.DB.Begin()
 	result := tx.Model(&Customer{}).Where("id = ?", customer.ID).Updates(&customer)
 	if result.Error != nil {
 		fmt.Printf("Error while updating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }
 
-func DeleteCustomer(customerID string) {
+func DeleteCustomer(customerID string) error {
 	tx := postgre.DB.Begin()
 	result := tx.Where("id = ?", customerID).Delete(&Customer{})
 	if result.Error != nil {
 		fmt.Printf("Error while updating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }
 
 // SUPPLIER CRUD
 
-func CreateSupplier(supplier *Supplier) {
+func CreateSupplier(supplier *Supplier) error {
 	tx := postgre.DB.Begin()
 	result := tx.Create(&supplier)
 	if result.Error != nil {
 		fmt.Printf("Error while creating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }
 
-func ReadSupplier(supplierID string) Supplier {
+func ReadSupplier(supplierID string) (*Supplier, error) {
 	supplier := Supplier{}
 	result := postgre.DB.Where("id = ?", supplierID).First(&supplier)
 	if result.Error != nil {
 		fmt.Printf("Error while finding customer %v\n", result.Error)
 	}
-	return supplier
+	return &supplier, result.Error
 }
 
-func UpdateSupplier(supplier *Supplier) {
+func UpdateSupplier(supplier *Supplier) error {
 	tx := postgre.DB.Begin()
 	result := tx.Model(&Customer{}).Where("id = ?", supplier.ID).Updates(&supplier)
 	if result.Error != nil {
 		fmt.Printf("Error while updating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }
 
-func DeleteSupplier(supplierID string) {
+func DeleteSupplier(supplierID string) error {
 	tx := postgre.DB.Begin()
 	result := tx.Where("id = ?", supplierID).Delete(&Supplier{})
 	if result.Error != nil {
 		fmt.Printf("Error while updating user %v\n", result.Error)
 		tx.Rollback()
-		return
+		return result.Error
 	}
 	tx.Commit()
+	return result.Error
 }

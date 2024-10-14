@@ -54,3 +54,13 @@ func DeleteComment(commentID string) {
 		return
 	}
 }
+
+func GetAllCommentsByCustomerID(customerID string) []Comment {
+	comments := []Comment{}
+	result := postgre.DB.Where("customer_id = ?", customerID).Find(&comments)
+	if result.Error != nil {
+		fmt.Printf("Error while searching products : %v", result.Error)
+		return nil
+	}
+	return comments
+}

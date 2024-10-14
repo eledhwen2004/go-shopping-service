@@ -62,3 +62,13 @@ func DeleteProduct(productID string) {
 	}
 	tx.Commit()
 }
+
+func GetAllProductsBySupplierID(supplierID string) []Product {
+	products := []Product{}
+	result := postgre.DB.Where("supplier_id = ?", supplierID).Find(&products)
+	if result.Error != nil {
+		fmt.Printf("Error while searching products : %v", result.Error)
+		return nil
+	}
+	return products
+}
