@@ -10,6 +10,7 @@ var (
 	UserName   string
 	DbPort     string
 	DbPassword string
+	ListenPort string
 )
 
 func GetDbName() string {
@@ -42,4 +43,14 @@ func GetDbPassword() string {
 		fmt.Println("Can't get the DbPassword!")
 	}
 	return DbPassword
+}
+
+func GetListenPort() string {
+	ListenPort = os.Getenv("LISTEN_PORT")
+
+	if ListenPort == "" {
+		fmt.Println("Null Value ListenPort")
+		return ""
+	}
+	return ListenPort
 }

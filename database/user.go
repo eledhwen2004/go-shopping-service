@@ -97,6 +97,10 @@ func DeleteUser(id string) error {
 	return result.Error
 }
 
+//
+// Admin CRUD will be added
+//
+
 // CUSTOMER CRUD
 
 func CreateCustomer(customer *Customer) error {
